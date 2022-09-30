@@ -26,7 +26,10 @@
     </div>
 
     <teleport to="#modal">
-      <ModalWin v-if="showModal" @close-modal="closeModal" @delete="onDelete" />
+      <ModalWin v-if="showModal" @close-modal="closeModal" @delete="onDelete">
+        <template v-slot:title> 할일 삭제 </template>
+        <template v-slot:body> 삭제하시겠습니까? </template>
+      </ModalWin>
     </teleport>
   </div>
 </template>
