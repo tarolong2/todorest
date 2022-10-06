@@ -1,30 +1,44 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view />
+  <div>
+    <NavBar />
+    <RouterView />
+    <Transition name="fade">
+      <ToastBox v-if="showToast" :message="toastMessage" :color="toastType" />
+    </Transition>
+  </div>
 </template>
-
-<style>
+<script>
+import ToastBox from "@/components/ToastBox.vue";
+import NavBar from "@/components/NavBar.vue";
+import { useToast } from "@/composables/toast";
+export default {
+  components: {
+    ToastBox,
+    NavBar,
+  },
+  setup() {
+    const { showToast, toastMessage, toastType } = useToast();
+    return { showToast, toastMessage, toastType };
+  },
+};
+</script>
+<style scoped>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
 }
 
-nav {
-  padding: 30px;
+.fade-enter-active,
+.fade-leave-active {
+  transition: all 0.5s ease;
 }
 
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+  transform: translateY(-30px);
 }
-
-nav a.router-link-exact-active {
-  color: #42b983;
+.fade-enter-to,
+.fade-leave-from {
+  opacity: 1;
+  transform: translateY(0);
 }
 </style>
